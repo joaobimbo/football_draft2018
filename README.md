@@ -6,6 +6,9 @@ This program **tries** to select combinations of players over all games such tha
 * There are 4 girls in each game
 * Everyone plays with everyone
 
-Example (dummy) output
+Example (dummy) output  \
+<br>
+
+
 <img src="https://raw.githubusercontent.com/joaobimbo/football_draft2018/master/images/gpp.png" height="240"  /> <img src="https://raw.githubusercontent.com/joaobimbo/football_draft2018/master/images/gpg.png" height="240"  />
 <img src="https://raw.githubusercontent.com/joaobimbo/football_draft2018/master/images/matrix.png" width="600"  />
