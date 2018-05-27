@@ -11,8 +11,9 @@
 
 %% Import the data
 function Doodle=import_doodle(fname)
-[~, ~, Doodle] = xlsread(['/home/joao/Documents/MATLAB/Football/',fname],'Poll');
-Doodle = Doodle(7:end-3,:);
+[~, ~, Doodle] = xlsread([fname],'Poll');
+%Doodle = Doodle(7:end-3,:);
+Doodle = Doodle(7:29,:);
 
 Doodle = string(Doodle);
 Doodle(ismissing(Doodle)) = '';

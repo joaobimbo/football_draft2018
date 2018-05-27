@@ -13,9 +13,11 @@ for i=1:length(f.players)
         end
     end
 end
-%close all
+close all
 fg=figure;
 bar(girls)
+title('Number of girls per game')
+xlabel('Game')
 fp=figure;
 hold on;
 bar(g_av)
@@ -23,7 +25,26 @@ bar(diag(matr))
 fp.Children(1).XTickLabelRotation=45;
 fp.Children(1).XTick=1:f.n_members;
 for i=1:f.n_members
-    fp.Children.XTickLabel{i}=f.members(i,2);
+    fp.Children.XTickLabel{i}=strcat(f.members(i,1),'-',f.members(i,2));
 end
+l=legend('Available','Selected');
+l.Orientation='horizontal';
+ylabel('Games')
 
+fi=figure;
+imagesc(matr)
+cm=jet;
+cm(1,:)=[1,1,1];
+cm=colormap(cm);
+
+fi.Children(1).XTickLabelRotation=45;
+fi.Children(1).XTick=1:f.n_members;
+for i=1:f.n_members
+    fi.Children.XTickLabel{i}=strcat(f.members(i,1),'-',f.members(i,2));
+end
+fi.Children(1).YTick=1:f.n_members;
+for i=1:f.n_members
+    fi.Children.YTickLabel{i}=f.members(i,2);
+end
+title('Combination of players')
 end

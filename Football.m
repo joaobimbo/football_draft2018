@@ -21,7 +21,7 @@ classdef Football < handle
             obj.nb_per_game=10;
             obj.ng_per_game=4;
             
-            obj.doodle=import_doodle('Doodle.xls');
+            obj.doodle=import_doodle('Doodle.xlsx');
             obj.n_members=size(obj.doodle,1);
             obj.members=[[1:obj.n_members]',obj.doodle(:,1)];
             obj.doodle(:,1)=obj.members(:,1);
@@ -56,17 +56,38 @@ classdef Football < handle
         end
         
         function draft(obj,fixture,selection)
-           obj.games{fixture}=selection;
-           for i=1:length(selection)               
-              obj.players{selection(i)}.select_to_play(fixture,selection);
-           end
+            obj.games{fixture}=selection;
+            for i=1:length(selection)
+                obj.players{selection(i)}.select_to_play(fixture,selection);
+            end
         end
         function erase_game(obj,fixture)
-           selection=obj.games{fixture};
-           for i=1:length(selection)               
-              obj.players{selection(i)}.remove_from_play(fixture,selection);
-           end
-           obj.games{fixture}=[];
+            selection=obj.games{fixture};
+            for i=1:length(selection)
+                obj.players{selection(i)}.remove_from_play(fixture,selection);
+            end
+            obj.games{fixture}=[];
+        end
+        
+        function valid=is_valid(obj,fixture,selection)
+            valid=(sum(obj.avail_grid(selection,fixture+1))==length(selection));
+        end
+        function switch_player(obj,fixture,out,in)            
+            selection=obj.games{fixture};
+            [~,idx]=find(selection==out);
+            [~,idx2]=find(selection==in);                
+             if(isempty(idx))
+                error('Player was not selected for this match');                
+             end
+              if(~isempty(idx2))
+                error('Player already selected for this match');                
+             end
+            
+            selection(idx)=in;
+            if(obj.is_valid(fixture,selection))
+                obj.erase_game(fixture)
+                obj.draft(fixture,selection)
+            end
         end
         
         function [c,ng]=cost_of_selection(obj,selection)
@@ -77,14 +98,20 @@ classdef Football < handle
             for i=selection
                 gp=gp+length(obj.players{i}.g_played);
                 gr=gr+obj.players{i}.rem_games;
-                if(obj.players{i}.girl==1) 
+                if(obj.players{i}.girl==1)
                     ng=ng+1;
-                end                
+                end
                 for j=1:length(selection)
                     pw=pw+(obj.players{i}.played_with(obj.players{selection(j)}.id)*2).^2;
                 end
-            end            
-           c=gp*10000+gr*20+pw+abs(ng-obj.ng_per_game)*10;
+            end
+            
+            gp_n=zeros(1,length(selection));
+            for i=1:length(selection)
+                gp_n(i)=length(obj.players{selection(i)}.g_played);
+            end
+            
+            c=gp*1000+gr*20+pw+abs(ng-obj.ng_per_game)*10+1000*mean(gp_n)+100*std(gp_n);
         end
     end
 end

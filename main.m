@@ -9,7 +9,7 @@ for j=1:10
     j
     for i=1:5000
         avails=f.avail_grid(find(f.avail_grid(:,j+1)==1),1);
-        ss=randperm(length(avails),9);
+        ss=randperm(length(avails),14);
         s=avails(ss)';
         
         %         good=false;
