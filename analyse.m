@@ -47,4 +47,23 @@ for i=1:f.n_members
     fi.Children.YTickLabel{i}=f.members(i,2);
 end
 title('Combination of players')
+colorbar
+
+fa=figure;
+imagesc(f.avail_grid(:,2:end))
+hold on
+fa.Children(1).YTick=1:f.n_members;
+for i=1:f.n_members
+    fa.Children.YTickLabel{i}=strcat(f.members(i,1),'-',f.members(i,2));
+end
+%title('Games')
+for i=1:10
+    t=text(i-0,0,['G', mat2str(i)]);
+    t.HorizontalAlignment='center'
+    plot(ones(1,length(f.games{i}))*i,f.games{i},'rx','MarkerSize',8)
+end
+fa.Children(1).XTick=1:10;
+fa.Children(1).XTickLabel=sum(f.avail_grid(:,2:end));
+xlabel('Available players')
+
 end

@@ -15,13 +15,13 @@ classdef Football < handle
         players
     end
     methods
-        function obj = Football()
+        function obj = Football(in_file)
             obj.girls={'Veronica Penza','Lucia Schiatti','Lara Soggiu'...
                 ,'Francesca Bonavita','Meri Lazzaroni','Lorenza Mancini'};
             obj.nb_per_game=10;
             obj.ng_per_game=4;
             
-            obj.doodle=import_doodle('Doodle.xlsx');
+            obj.doodle=import_doodle(in_file);
             obj.n_members=size(obj.doodle,1);
             obj.members=[[1:obj.n_members]',obj.doodle(:,1)];
             obj.doodle(:,1)=obj.members(:,1);
@@ -72,16 +72,31 @@ classdef Football < handle
         function valid=is_valid(obj,fixture,selection)
             valid=(sum(obj.avail_grid(selection,fixture+1))==length(selection));
         end
-        function switch_player(obj,fixture,out,in)            
+        function add_to_selection(obj,fixture,in)
+            selection=obj.games{fixture};
+            [~,idx2]=find(selection==in);
+            if(~isempty(idx2))
+                error('Player already selected for this match');
+            end
+            selection(end+1)=in;
+            if(obj.is_valid(fixture,in))
+                obj.erase_game(fixture);
+                obj.draft(fixture,selection)
+            else
+                error('Player is not available for this match');
+            end
+        end
+        
+        function switch_player(obj,fixture,out,in)
             selection=obj.games{fixture};
             [~,idx]=find(selection==out);
-            [~,idx2]=find(selection==in);                
-             if(isempty(idx))
-                error('Player was not selected for this match');                
-             end
-              if(~isempty(idx2))
-                error('Player already selected for this match');                
-             end
+            [~,idx2]=find(selection==in);
+            if(isempty(idx))
+                error('Player was not selected for this match');
+            end
+            if(~isempty(idx2))
+                error('Player already selected for this match');
+            end
             
             selection(idx)=in;
             if(obj.is_valid(fixture,selection))

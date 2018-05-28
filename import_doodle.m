@@ -12,8 +12,9 @@
 %% Import the data
 function Doodle=import_doodle(fname)
 [~, ~, Doodle] = xlsread([fname],'Poll');
-%Doodle = Doodle(7:end-3,:);
-Doodle = Doodle(7:29,:);
+idx=find(string(Doodle(:,1))=='Count');
+Doodle = Doodle(7:idx-1,1:11);
+%Doodle = Doodle(7:29,:);
 
 Doodle = string(Doodle);
 Doodle(ismissing(Doodle)) = '';
