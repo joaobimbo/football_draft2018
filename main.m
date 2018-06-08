@@ -2,14 +2,16 @@ clear
 rng('shuffle');
 f=Football('Doodle.xls');
 
+f.nb_per_game=9;
+f.ng_per_game=4;
 
 tic
 for j=1:10
     c_min=1e9;
     j
-    for i=1:5000
+    for i=1:1000
         avails=f.avail_grid(find(f.avail_grid(:,j+1)==1),1);
-        ss=randperm(length(avails),10);
+        ss=randperm(length(avails),f.nb_per_game+f.ng_per_game);
         s=avails(ss)';
         
         %         good=false;

@@ -126,7 +126,7 @@ classdef Football < handle
                 gp_n(i)=length(obj.players{selection(i)}.g_played);
             end
             
-            c=gp*1000+gr*20+pw+abs(ng-obj.ng_per_game)*10+1000*mean(gp_n)+100*std(gp_n);
+            c=gp*1000+gr*20+pw+abs(ng-obj.ng_per_game)*10000+100*mean(gp_n)+10*std(gp_n);
         end
     end
 end
