@@ -1,12 +1,11 @@
 clear
 rng('shuffle');
 f=Football('Doodle.xls');
-
-f.nb_per_game=9;
-f.ng_per_game=4;
+f.draft(1,[1,2,3,6,8,9,10,15,16,18,21,23])
+f.draft(2,[1,4,5,7,9,10,11,12,15,16,19,20,21,23])
 
 tic
-for j=1:10
+for j=3:3
     c_min=1e9;
     j
     for i=1:1000
