@@ -3,9 +3,16 @@ rng('shuffle');
 f=Football('Doodle.xls');
 f.draft(1,[1,2,3,6,8,9,10,15,16,18,21,23])
 f.draft(2,[1,4,5,7,9,10,11,12,15,16,19,20,21,23])
+f.draft(3,[2,3,4,6,8,11,12,15,16,19,23,25])
+f.draft(4,[1,3,6,7,9,10,12,14,18,22,24,25]) 
+f.draft(5,[1,3,5,6,7,9,10,11,13,20,22]) %plus mohammad
+
+f.nb_per_game=9;
+f.ng_per_game=4;
+
 
 tic
-for j=3:3
+for j=6:6
     c_min=1e9;
     j
     for i=1:1000
