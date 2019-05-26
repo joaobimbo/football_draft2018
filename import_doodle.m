@@ -15,6 +15,7 @@ function Doodle=import_doodle(fname)
 DoodTable=readtable(fname);
 Doodle=[];
 i=6;
+k=1;
 sz=size(DoodTable,2);
 while ~strcmp(DoodTable.Poll_ScontentiFootball_{i},'Count')
     line=table2array(DoodTable(i,2:end));
@@ -27,10 +28,11 @@ while ~strcmp(DoodTable.Poll_ScontentiFootball_{i},'Count')
             vars(j)=1;
         end
         end
-        Doodle=[Doodle;vars];
+        Doodle=[Doodle;string([k,vars])];
     end
     DoodTable.Poll_ScontentiFootball_{i}
     i=i+1;
+    k=k+1;
 end
 %Doodle = [Doodle;
 %    Doodle(7:idx-1,1:12    );
