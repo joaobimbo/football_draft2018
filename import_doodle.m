@@ -11,14 +11,34 @@
 
 %% Import the data
 function Doodle=import_doodle(fname)
-[~, ~, Doodle] = xlsread([fname],'Poll');
-idx=find(string(Doodle(:,1))=='Count');
-Doodle = Doodle(7:idx-1,1:11);
+%[~, ~, Doodle] = xlsread([fname],'Poll');
+DoodTable=readtable(fname);
+Doodle=[];
+i=6;
+sz=size(DoodTable,2);
+while ~strcmp(DoodTable.Poll_ScontentiFootball_{i},'Count')
+    line=table2array(DoodTable(i,2:end));
+    if(length(line)~=sz-1 || length(line{1})==0)
+    %continue
+    else
+        vars=zeros(1,sz-1);
+        for j=1:sz-1
+        if strcmp(line{j},'OK')
+            vars(j)=1;
+        end
+        end
+        Doodle=[Doodle;vars];
+    end
+    DoodTable.Poll_ScontentiFootball_{i}
+    i=i+1;
+end
+%Doodle = [Doodle;
+%    Doodle(7:idx-1,1:12    );
 %Doodle = Doodle(7:29,:);
 
-Doodle = string(Doodle);
-Doodle(ismissing(Doodle)) = '';
-Doodle(:,2:end)=double(Doodle(:,2:end)=='OK');
+%Doodle = string(Doodle);
+%Doodle(ismissing(Doodle)) = '';
+%Doodle(:,2:end)=double(Doodle(:,2:end)=='OK');
 
 
 end
