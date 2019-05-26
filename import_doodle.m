@@ -18,19 +18,20 @@ i=6;
 k=1;
 sz=size(DoodTable,2);
 while ~strcmp(DoodTable.Poll_ScontentiFootball_{i},'Count')
-    line=table2array(DoodTable(i,2:end));
-    if(length(line)~=sz-1 || length(line{1})==0)
+    line=table2array(DoodTable(i,1:end));
+    if(length(line)~=sz || length(line{1})==0)
     %continue
     else
         vars=zeros(1,sz-1);
-        for j=1:sz-1
+        for j=2:sz
         if strcmp(line{j},'OK')
-            vars(j)=1;
+            vars(j-1)=1;
         end
         end
-        Doodle=[Doodle;string([k,vars])];
-    end
-    DoodTable.Poll_ScontentiFootball_{i}
+        Doodle=[Doodle;[string(DoodTable.Poll_ScontentiFootball_{i}),string(vars)]];
+        DoodTable.Poll_ScontentiFootball_{i}
+    end    
+    
     i=i+1;
     k=k+1;
 end

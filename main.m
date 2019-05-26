@@ -9,13 +9,13 @@ f=Football('Doodle_2019.xls');
 % f.draft(6,[1,3,4,6,9,10,11,12,14,17,20,21,22,24]) 
 % f.draft(7,[2,3,5,6,8,9,10,11,13,19,20,22]) %plus mohammad alp
 
-f.nb_per_game=4;
-f.ng_per_game=2;
+f.nb_per_game=1;
+f.ng_per_game=1;
 
 
 tic
 %%
-for j=9:9
+for j=1:10
     c_min=1e9;
     j
     for i=1:1000
